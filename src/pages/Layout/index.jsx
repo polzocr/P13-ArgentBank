@@ -6,10 +6,10 @@ import Footer from '../../components/Footer/index'
 
 export default function Layout(){
     return (
-        <div>
+        <body>
             <Header />
             <Outlet />
             <Footer />
-        </div>
+        </body>
     )
 }
