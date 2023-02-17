@@ -123,5 +123,5 @@ const {actions, reducer} = createSlice({
     }
 })
 
-export const {resetProfil} = actions
+export const {reset} = actions
 export default reducer

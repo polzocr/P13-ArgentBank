@@ -80,9 +80,10 @@ const {actions, reducer } = createSlice({
             draft.status = 'void',
             draft.error = null,
             draft.data = null
+            return
         }
     }
 })
 
-export const {resetLogin} = actions 
+export const {reset} = actions 
 export default reducer

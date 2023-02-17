@@ -2,8 +2,8 @@ import { useSelector, useStore } from 'react-redux'
 import { Link } from 'react-router-dom'
 import logo from '../../assets/images/argentBankLogo.png'
 import { selectorConnected, selectorProfil } from '../../utils/Redux/selectors'
-import { resetLogin } from '../../features/login'
-import { resetProfil } from '../../features/profil'
+import { reset as resetLogin } from '../../features/login'
+import { reset as resetProfil } from '../../features/profil'
 import './index.css'
 
 export default function Header() {
