@@ -19,7 +19,7 @@ export async function fetchingProfilInfos(store, token) {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': `Beaazrer ${token}`
+                'Authorization': `Bearer ${token}`
             },
         })
         const data = await response.json()
@@ -34,6 +34,7 @@ export async function fetchingProfilInfos(store, token) {
     } catch (error) {
         store.dispatch(actions.rejected(error))
         console.log(error)
+        // window.location.href = '/login'
     }
 }
 

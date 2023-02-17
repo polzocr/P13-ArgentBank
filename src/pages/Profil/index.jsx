@@ -20,23 +20,29 @@ export default function Profil() {
     } 
 
     useEffect(() => {
+        
         fetchingProfilInfos(store, login.data.token)
+        .then(() => {
+            const status = store.getState().profil.status
+            if (status === 'rejected') {
+                navigate('/login')
+            }
+        })
+        
     }, [])
-
-    useEffect(() => {
-        // if(profil.error){
-        //     navigate('/login')
-        // }
-    }, [profil])
 
 
     return (
-        <main className='main bg-dark'>
-            <Welcome />
-            <h2 className='sr-only'>Accounts</h2>
-            <Transaction />
-            <Transaction />
-            <Transaction />
-        </main>
+        <>
+            {profil.data && 
+            <main className='main bg-dark'>
+                <Welcome />
+                <h2 className='sr-only'>Accounts</h2>
+                <Transaction />
+                <Transaction />
+                <Transaction />
+            </main>}
+        </>
+        
     )
 }
