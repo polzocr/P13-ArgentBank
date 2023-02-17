@@ -1,14 +1,12 @@
-import { useEffect, useRef, useState } from 'react'
 import './index.css'
+import { useState } from 'react'
 import { loginWithFormData } from '../../features/login'
-import {useSelector, useStore} from 'react-redux'
-import { selectorLogin } from '../../utils/Redux/selectors'
-import { useNavigate } from 'react-router-dom'
+import { useStore} from 'react-redux'
+import { useNavigate} from 'react-router-dom'
 
 export default function Form() {
 
     const store = useStore()
-    const login = useSelector(selectorLogin)
     const navigate = useNavigate()
 
     const [form, setForm] = useState({
@@ -16,28 +14,15 @@ export default function Form() {
         password: ''
     })
     const [error, setError] = useState(false)
-    const firstRender = useRef(true)
-
-    useEffect(() => {
-        if(firstRender.current){
-            firstRender.current = false
-        } else {
-            if (login.error) {
-                console.log("erreur reset form")
-                setError(true)
-            }
-            if (login.data) {
-                console.log('succes redirection')
-                navigate('/profil')
-            }
-        }
-        
-    }, [login])
 
 
     function handleSubmit(e){
         e.preventDefault()
         loginWithFormData(store, form)
+        .then(() => {
+            const status = store.getState().login.status
+            status === 'rejected' ? setError(true) : navigate('/profil')
+        })
     }
 
     function handleChange(e) {
