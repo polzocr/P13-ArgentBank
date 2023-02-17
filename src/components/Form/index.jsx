@@ -1,20 +1,41 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './index.css'
-import { loginWithFormData } from '../../features/user'
+import { loginWithFormData } from '../../features/login'
+import {useSelector, useStore} from 'react-redux'
+import { selectorLogin } from '../../utils/Redux/selectors'
+import { useNavigate } from 'react-router-dom'
+
 export default function Form() {
+
+    const store = useStore()
+    const connexion = useSelector(selectorLogin)
+    const navigate = useNavigate()
 
     const [form, setForm] = useState({
         userName: '',
         password: ''
     })
+    const [error, setError] = useState(false)
+
+    useEffect(() => {
+        if (connexion.error) {
+            console.log("erreur reset form")
+            setError(true)
+        }
+        if (connexion.data) {
+            console.log('succes redirection')
+            navigate('/profil')
+        }
+    }, [connexion])
+
 
     function handleSubmit(e){
         e.preventDefault()
-        console.log(form)
-        loginWithFormData(form)
+        loginWithFormData(store, form)
     }
 
     function handleChange(e) {
+        setError(false)
         setForm((prevState) => {
             return {
                 ...prevState,
@@ -27,7 +48,7 @@ export default function Form() {
         <section className='sign-in-content'>
             <i className='fa fa-user-circle sign-in-icon'></i>
             <h1>Sign In</h1>
-
+            {error && <p className='error-message'>Informations erronées</p>}
             <form onSubmit={handleSubmit}>
                 <div className='input-wrapper'>
                     <label htmlFor="username">Username</label>

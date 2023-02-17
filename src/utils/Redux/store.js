@@ -1,8 +1,8 @@
 import {configureStore} from '@reduxjs/toolkit'
-import userReducer from '../../features/user'
+import userReducer from '../../features/login'
 
 export default configureStore({
     reducer: {
-        user: userReducer,
+        login: userReducer,
     }
 })
