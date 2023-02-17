@@ -7,8 +7,8 @@ import store from './utils/Redux/store'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    <React.StrictMode>
+    {/* <React.StrictMode> */}
       <Router />
-    </React.StrictMode>
+    {/* </React.StrictMode> */}
   </Provider>
 )

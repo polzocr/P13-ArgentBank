@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './index.css'
 import { loginWithFormData } from '../../features/login'
 import {useSelector, useStore} from 'react-redux'
@@ -16,16 +16,22 @@ export default function Form() {
         password: ''
     })
     const [error, setError] = useState(false)
+    const firstRender = useRef(true)
 
     useEffect(() => {
-        if (login.error) {
-            console.log("erreur reset form")
-            setError(true)
+        if(firstRender.current){
+            firstRender.current = false
+        } else {
+            if (login.error) {
+                console.log("erreur reset form")
+                setError(true)
+            }
+            if (login.data) {
+                console.log('succes redirection')
+                navigate('/profil')
+            }
         }
-        if (login.data) {
-            console.log('succes redirection')
-            navigate('/profil')
-        }
+        
     }, [login])
 
 
@@ -35,7 +41,9 @@ export default function Form() {
     }
 
     function handleChange(e) {
-        setError(false)
+        if(error){
+            setError(false)
+        }
         setForm((prevState) => {
             return {
                 ...prevState,
