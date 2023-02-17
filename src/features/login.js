@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { selectorLogin } from "../utils/Redux/selectors"
-import {Navigate} from 'react-router-dom'
-import { redirect } from "react-router-dom"
 
 
 const initialState = {
@@ -39,8 +37,6 @@ export async function loginWithFormData(store, userData){
     } catch (error) {
         store.dispatch(actions.rejected(error))
         console.log('connexion échouée')
-        // redirect('/')
-        // window.location.href = '/login'
     }
 }
 
