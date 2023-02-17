@@ -1,41 +1,60 @@
 import './index.css'
 import { useState } from 'react'
 import { loginWithFormData } from '../../features/login'
-import { useStore} from 'react-redux'
+import { useSelector, useStore} from 'react-redux'
 import { useNavigate} from 'react-router-dom'
+import { selectorProfil } from '../../utils/Redux/selectors'
 
 export default function Form() {
 
     const store = useStore()
     const navigate = useNavigate()
+    const profil = useSelector(selectorProfil)
 
     const [form, setForm] = useState({
         userName: '',
-        password: ''
+        password: '',
+        remember: false,
     })
     const [error, setError] = useState(false)
 
+
+    function handleChange(e) {
+        if (error) {
+            setError(false)
+        }
+        setForm((prevState) => {
+            const input = e.target
+            return {
+                ...prevState,
+                [input.name]: input.name === 'remember' ? input.checked : input.value
+            }
+        })
+    }
 
     function handleSubmit(e){
         e.preventDefault()
         loginWithFormData(store, form)
         .then(() => {
-            const status = store.getState().login.status
-            status === 'rejected' ? setError(true) : navigate('/profil')
-        })
-    }
-
-    function handleChange(e) {
-        if(error){
-            setError(false)
-        }
-        setForm((prevState) => {
-            return {
-                ...prevState,
-                [e.target.name]: e.target.value
+            const login = store.getState().login
+            if(login.status === 'rejected'){
+                setError(true)
+            } else {
+                if(form.remember){
+                    saveUserLocalStorage(login)
+                }
+                navigate('/profil')
             }
         })
     }
+
+    function saveUserLocalStorage(login) {
+        const localUserObject = JSON.stringify(login.data)
+        localStorage.setItem('user', localUserObject)
+        
+    }
+
+    
 
     return (
         <section className='sign-in-content'>
@@ -52,7 +71,7 @@ export default function Form() {
                     <input type="password" id='password' name='password' value={form.password} onChange={handleChange} />
                 </div>
                 <div className='input-remember'>
-                    <input type="checkbox" id='remember-me' />
+                    <input type="checkbox" id='remember-me' name='remember' checked={form.remember} onChange={handleChange} />
                     <label htmlFor="remember-me">Remember me</label>
                 </div>
                 <button className='sign-in-button'>Sign In</button>

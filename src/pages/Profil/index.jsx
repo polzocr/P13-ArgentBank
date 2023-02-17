@@ -6,6 +6,7 @@ import { useSelector, useStore } from 'react-redux'
 import { selectorConnected, selectorProfil, selectorToken } from '../../utils/Redux/selectors'
 import { Navigate, useNavigate} from 'react-router-dom'
 import { fetchingProfilInfos } from '../../features/profil'
+import { removeLocalStorage } from '../../services/LocalStorage/localStorage'
 
 
 export default function Profil() {
@@ -17,6 +18,7 @@ export default function Profil() {
     const navigate = useNavigate()
 
     if (!connected){
+        console.log('redirection', connected)
         return <Navigate to='/login' replace="true"/>
     } 
 
@@ -27,6 +29,7 @@ export default function Profil() {
             const status = store.getState().profil.status
             if (status === 'rejected') {
                 navigate('/login')
+                removeLocalStorage()
             }
         })
         

@@ -15,6 +15,11 @@ export default function Header() {
     function logout(){
         store.dispatch(resetLogin())
         store.dispatch(resetProfil())
+        removeLocalStorage()
+    }
+
+    function removeLocalStorage(){
+        localStorage.removeItem('user')
     }
 
     return (

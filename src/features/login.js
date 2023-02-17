@@ -76,6 +76,10 @@ const {actions, reducer } = createSlice({
             }
             return
         },
+        remembered: (draft, action) => {
+            draft.status = 'resolved'
+            draft.data = action.payload
+        },
         reset: (draft, action) => {
             draft.status = 'void',
             draft.error = null,
@@ -85,5 +89,5 @@ const {actions, reducer } = createSlice({
     }
 })
 
-export const {reset} = actions 
+export const {reset, remembered} = actions 
 export default reducer
