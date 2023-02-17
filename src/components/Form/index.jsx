@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 export default function Form() {
 
     const store = useStore()
-    const connexion = useSelector(selectorLogin)
+    const login = useSelector(selectorLogin)
     const navigate = useNavigate()
 
     const [form, setForm] = useState({
@@ -18,15 +18,15 @@ export default function Form() {
     const [error, setError] = useState(false)
 
     useEffect(() => {
-        if (connexion.error) {
+        if (login.error) {
             console.log("erreur reset form")
             setError(true)
         }
-        if (connexion.data) {
+        if (login.data) {
             console.log('succes redirection')
             navigate('/profil')
         }
-    }, [connexion])
+    }, [login])
 
 
     function handleSubmit(e){
