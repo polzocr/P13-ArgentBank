@@ -12,6 +12,7 @@ export default function Header() {
     const profil = useSelector(selectorProfil)
     const store = useStore()
 
+    //reset and remove every data when logout
     function logout(){
         store.dispatch(resetLogin())
         store.dispatch(resetProfil())

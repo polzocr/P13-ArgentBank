@@ -7,11 +7,19 @@ const initialState = {
     error: null,
 }
 
+/**
+ * PROFIL POST METHOD using actions 
+ * @param {Object} store 
+ * @param {String} token 
+ * @returns 
+ */
 export async function fetchingProfilInfos(store, token) {
+    //checking status
     const status = selectorProfil(store.getState()).status
     if (status === 'updating' || status === 'pending') {
         return
     }
+    //status pending... or status updating...
     store.dispatch(actions.fetching())
     try {
         const response = await fetch('http://localhost:3001/api/v1/user/profile', {
@@ -23,21 +31,29 @@ export async function fetchingProfilInfos(store, token) {
             },
         })
         const data = await response.json()
-        console.log('ici', data)
+        
         if (!data.body) {
             throw data.message
         } else {
+            //status resolved + data in state
             store.dispatch(actions.resolved(data.body))
             console.log("Profil recupéré")
 
         }
     } catch (error) {
+        //status rejected + error in state
         store.dispatch(actions.rejected(error))
         console.log(error)
-        // window.location.href = '/login'
     }
 }
 
+/**
+ * PROFIL PUT METHOD using actions 
+ * @param {Object} store 
+ * @param {String} token 
+ * @param {Object} userData formData for changing profil
+ * @returns 
+ */
 export async function updatingProfilInfos(store, token, userData) {
     const status = selectorProfil(store.getState()).status
     if (status === 'updating' || status === 'pending') {
@@ -58,7 +74,7 @@ export async function updatingProfilInfos(store, token, userData) {
             })
         })
         const data = await response.json()
-        console.log('ici', data)
+        
         if (!data.body) {
             throw data.message
         } else {

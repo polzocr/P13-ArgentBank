@@ -24,6 +24,7 @@ export default function Profil() {
 
     useEffect(() => {
         
+        // async action from redux to get profil
         fetchingProfilInfos(store, token)
         .then(() => {
             const status = store.getState().profil.status

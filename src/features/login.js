@@ -8,11 +8,19 @@ const initialState = {
     error: null
 }
 
+/**
+ * LOGIN POST METHOD using actions 
+ * @param {Object} store 
+ * @param {Object} userData formData
+ * @returns 
+ */
 export async function loginWithFormData(store, userData){
+    //checking status
     const status = selectorLogin(store.getState()).status
     if(status === 'updating' || status === 'pending'){
         return
     }
+    //status pending... or status updating...
     store.dispatch(actions.fetching())
     try {
         const response = await fetch('http://localhost:3001/api/v1/user/login', {
@@ -30,11 +38,13 @@ export async function loginWithFormData(store, userData){
         if (!data.body) {
             throw data.message
         } else {
+            //status resolved + data in state
             store.dispatch(actions.resolved(data.body))
             console.log("connexion réussie")
             
         }
     } catch (error) {
+        //status rejected + error in state
         store.dispatch(actions.rejected(error))
         console.log('connexion échouée')
     }

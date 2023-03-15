@@ -34,6 +34,7 @@ export default function Form() {
 
     function handleSubmit(e){
         e.preventDefault()
+        //redux action to login via post method
         loginWithFormData(store, form)
         .then(() => {
             const login = store.getState().login
@@ -48,10 +49,13 @@ export default function Form() {
         })
     }
 
+    /**
+     * remembering user via localStorage
+     * @param {Object} login login state from redux
+     */
     function saveUserLocalStorage(login) {
         const localUserObject = JSON.stringify(login.data)
         localStorage.setItem('user', localUserObject)
-        
     }
 
     

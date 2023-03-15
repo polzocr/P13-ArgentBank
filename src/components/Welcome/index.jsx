@@ -30,6 +30,9 @@ export default function Welcome(){
         editProfil()
     }
 
+    /**
+     * if new values are empty, take old ones
+     */
     function checkEmptyValue() {
         if (form.firstName === '') {
             form.firstName = profil.data.firstName
@@ -39,11 +42,13 @@ export default function Welcome(){
         }
     }
 
+    //editing profil calling redux action 
     function editProfil() {
         updatingProfilInfos(store, login.data.token, form)
             .then(() => {
                 const status = store.getState().profil.status
                 if (status !== 'rejected') {
+                    //hiding editing form
                     setEditing(false)
                 }
             })

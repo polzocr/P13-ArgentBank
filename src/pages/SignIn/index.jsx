@@ -10,6 +10,7 @@ export default function SignIn() {
     const navigate = useNavigate()
     
     useEffect(() => {
+        //redirect if already connected
         if (login?.data) {
             navigate('/')
         }
