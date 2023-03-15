@@ -4,7 +4,7 @@
 ![CSS](https://img.shields.io/badge/-css-orange)
 ____________________
 
-# SportSee
+# ArgentBank
 
 > -- _ArgentBank is a Bank application where we can Login and see our Profile. We can also see our Bank Accounts and Transactions_ --
 
